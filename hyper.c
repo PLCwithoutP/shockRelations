@@ -41,7 +41,7 @@ int main(void)
 
   // Function executions
   p_ratio = exact_pressure(pGamma1, pBeta1, pMach1);
-  density_ratio = exact_density(pGamma1, pBeta1, pMach1);
+  rho_ratio = exact_density(pGamma1, pBeta1, pMach1);
 
   // Display
   printf("Given inputs are: \n");
@@ -96,4 +96,4 @@ float exact_density(float *pGamma1, float *pBeta1, float *pMach1)
   rho_ratio = ((tempGamma1 + 1)*pow(tempMach1*sin(tempBeta1Rad),2))/((tempGamma1 - 1)*pow(tempMach1*sin(tempBeta1Rad),2) + 2);
 
   return rho_ratio;
-]
+}
