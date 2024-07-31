@@ -32,9 +32,9 @@ int main(void)
   printf("Please enter specific heat ratio: \n");
   scanf("%f", &gamma1);
   *pGamma1 = gamma1;
-  printf("Please enter wave angle: \n");
+  printf("Please enter wave angle in degrees: \n");
   scanf("%f", &beta1);
-  *pBeta1 = beta1;
+  *pBeta1 = beta1*PI_F/180;
   printf("Please enter Mach number: \n");
   scanf("%f", &Mach1);
   *pMach1 = Mach1;  
@@ -46,7 +46,7 @@ int main(void)
   // Display
   printf("Given inputs are: \n");
   printf("Specific heat ratio is: %f\n", gamma1);
-  printf("Wave angle is: %f\n", beta1);
+  printf("Wave angle is: %f degrees\n", beta1);
   printf("Mach number is: %f\n", Mach1);
   printf("Resulting exact static pressure ratio is: %f\n", p_ratio);
   printf("Resulting exact density ratio is: %f\n", rho_ratio);
@@ -64,36 +64,18 @@ int main(void)
 
 float exact_pressure(float *pGamma1, float *pBeta1, float *pMach1)
 {
-  float tempGamma1 = 0;
-  float tempBeta1 = 0; // degrees
-  float tempBeta1Rad = 0; // radian
-  float tempMach1 = 0;
   float p_ratio = 0;
 
-  tempGamma1 = *pGamma1;
-  tempBeta1 = *pBeta1;
-  tempMach1 = *pMach1;
-  tempBeta1Rad = tempBeta1*PI_F/180;
-
-  p_ratio = 1 + (2*tempGamma1*(pow(tempMach1*sin(tempBeta1Rad),2) - 1))/(tempGamma1 + 1);
+  p_ratio = 1 + (2*(*pGamma1)*(pow((*pMach1)*sin(*pBeta1),2) - 1))/(*pGamma1 + 1);
   
   return p_ratio;
 }
 
 float exact_density(float *pGamma1, float *pBeta1, float *pMach1)
 {
-  float tempGamma1 = 0;
-  float tempBeta1 = 0; // degrees
-  float tempBeta1Rad = 0; // radian
-  float tempMach1 = 0;
   float rho_ratio = 0;
 
-  tempGamma1 = *pGamma1;
-  tempBeta1 = *pBeta1;
-  tempMach1 = *pMach1;
-  tempBeta1Rad = tempBeta1*PI_F/180;
-
-  rho_ratio = ((tempGamma1 + 1)*pow(tempMach1*sin(tempBeta1Rad),2))/((tempGamma1 - 1)*pow(tempMach1*sin(tempBeta1Rad),2) + 2);
+  rho_ratio = ((*pGamma1 + 1)*pow((*pMach1)*sin(*pBeta1),2))/((*pGamma1 - 1)*pow((*pMach1)*sin(*pBeta1),2) + 2);
 
   return rho_ratio;
 }
